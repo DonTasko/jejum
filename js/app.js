@@ -96,9 +96,9 @@ function switchTab(name) {
 
   // Ads: mostrar banner em history/stats, esconder em timer
   if (name === 'timer') {
-    AdsManager.hideBanner();
+    Ads.hideBanner();
   } else {
-    AdsManager.showBanner();
+    Ads.showBanner();
   }
 
   // Carregar conteúdo da tab
@@ -252,7 +252,7 @@ UI.btnStop.addEventListener('click', async () => {
   showToast(`Jejum guardado: ${session.durationHours}h`, 3000);
 
   // Interstitial após terminar jejum
-  setTimeout(() => AdsManager.showInterstitial(), 2000);
+  setTimeout(() => Ads.showInterstitial(), 2000);
 });
 
 // ── HISTORY ───────────────────────────────────
@@ -340,6 +340,16 @@ UI.btnResetAll.addEventListener('click', async () => {
   location.reload();
 });
 
+// ── ADS SAFE WRAPPER ─────────────────────────
+// Guard para o caso de adsManager.js não ter carregado
+const Ads = {
+  init:             () => typeof AdsManager !== 'undefined' && AdsManager.init(),
+  showBanner:       () => typeof AdsManager !== 'undefined' && AdsManager.showBanner(),
+  hideBanner:       () => typeof AdsManager !== 'undefined' && AdsManager.hideBanner(),
+  showInterstitial: () => typeof AdsManager !== 'undefined' && AdsManager.showInterstitial(),
+  showRewarded:     (t) => typeof AdsManager !== 'undefined' ? AdsManager.showRewarded(t) : Promise.resolve(false),
+};
+
 // ── BOOT ──────────────────────────────────────
 async function boot() {
   await Storage.init();
@@ -354,12 +364,7 @@ async function boot() {
     setActiveUI();
     UI.quoteText.textContent = Timer.getRandomQuote();
     showToast('Jejum retomado!');
-    // Reiniciar tick
-    Timer.resume(); // resume retoma o tick mesmo que não estivesse pausado
-    // Se estava mesmo em pause, repausar
-    if (Timer.isPaused()) {
-      /* já está pausado internamente, não fazer nada */
-    }
+    Timer.resume();
   }
 
   // Carregar sessões
@@ -376,7 +381,7 @@ async function boot() {
   }
 
   // AdMob init (estrutura)
-  AdsManager.init();
+  Ads.init();
 
   // Splash → app
   setTimeout(() => {
