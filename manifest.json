@@ -9,7 +9,11 @@
   "theme_color": "#0f1923",
   "background_color": "#0f1923",
   "lang": "pt-PT",
-  "categories": ["health", "fitness", "lifestyle"],
+  "categories": [
+    "health",
+    "fitness",
+    "lifestyle"
+  ],
   "icons": [
     {
       "src": "./assets/icons/icon-72.png",
@@ -40,22 +44,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
   "shortcuts": [
     {
       "name": "Iniciar Jejum",
       "short_name": "Iniciar",
-      "description": "Abre o cronómetro de jejum",
       "url": "./?tab=timer",
-      "icons": [{ "src": "./assets/icons/icon-96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "./assets/icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Ver Histórico",
       "short_name": "Histórico",
-      "description": "Ver os teus jejuns anteriores",
       "url": "./?tab=history",
-      "icons": [{ "src": "./assets/icons/icon-96.png", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "./assets/icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "prefer_related_applications": false
